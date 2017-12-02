@@ -28,6 +28,17 @@ func findDiff(numbers []int, result chan int) {
 	result <- (max - min)
 }
 
+func findEvenlyDividedDiff(numbers []int, result chan int) {
+	for i, a := range numbers {
+		for j, b := range numbers {
+			if i != j && a%b == 0 {
+				result <- (a / b)
+				return
+			}
+		}
+	}
+}
+
 func parseInput() [][]int {
 	f, e := os.Open(os.Args[1])
 	handleErr(e)
@@ -60,7 +71,7 @@ func main() {
 	lines := 0
 	diffs := make(chan int)
 	for _, v := range parseInput() {
-		go findDiff(v, diffs)
+		go findEvenlyDividedDiff(v, diffs)
 		lines++
 	}
 	for lines > 0 {
