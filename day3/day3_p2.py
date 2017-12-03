@@ -6,15 +6,17 @@ from itertools import islice
 import matplotlib.pyplot as plt
 import numpy as np
 
-def neighbors(x,y):
-    yield (x,y-1)
-    yield (x-1,y-1)
-    yield (x-1,y)
-    yield (x-1,y+1)
-    yield (x,y+1)
-    yield (x+1,y+1)
-    yield (x+1,y)
-    yield (x+1,y-1)
+
+def neighbors(x, y):
+    yield (x, y - 1)
+    yield (x - 1, y - 1)
+    yield (x - 1, y)
+    yield (x - 1, y + 1)
+    yield (x, y + 1)
+    yield (x + 1, y + 1)
+    yield (x + 1, y)
+    yield (x + 1, y - 1)
+
 
 def positions():
     sides = 0
@@ -35,7 +37,7 @@ def positions():
             sides += 1
             cp = 1
             if sides == 4:
-                yield(cx, cy)
+                yield (cx, cy)
                 cx += 1
                 sides = 0
                 cw += 2
@@ -58,17 +60,17 @@ if __name__ == '__main__':
     N = int(sys.argv[1])
     size = 1
     while True:
-        M = np.zeros((size+1,size+1))
-        n = int(size/2)
-        M[n,n] = 1
-        print('Size: {}x{}'.format(size+1,size+1))
+        M = np.zeros((size + 1, size + 1))
+        n = int(size / 2)
+        M[n, n] = 1
+        print('Size: {}x{}'.format(size + 1, size + 1))
         for off in positions():
-            p = (n+off[0], n+off[1])
-            if p[0]<1 or p[0] >= size or p[1]<1 or p[1]>=size:
+            p = (n + off[0], n + off[1])
+            if p[0] < 1 or p[0] >= size or p[1] < 1 or p[1] >= size:
                 break
-            v = sum(map(lambda x: M[x[0],x[1]],neighbors(p[0],p[1])))
-            M[p[0],p[1]] = v
+            v = sum(map(lambda x: M[x[0], x[1]], neighbors(p[0], p[1])))
+            M[p[0], p[1]] = v
             if v > N:
                 print(int(v))
                 sys.exit(0)
-        size*=2
+        size *= 2
