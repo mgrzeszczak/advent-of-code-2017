@@ -6,17 +6,17 @@ import os
 from functools import reduce
 
 
-def flatten(sequence, func=lambda x: x):
-    return reduce(lambda r, x: r + func(x), sequence, [])
+def flatten(sequence: iter, func: callable = lambda x: x):
+    return reduce(lambda res, x: res + func(x), sequence, [])
 
 
-def parse(regex, text, func=lambda x: x):
+def parse(regex: str, text: str, func: callable = lambda x: x):
     r = re.search(regex, text)
     groups = r.groups()
     return func(groups)
 
 
-def to_hex(i):
+def to_hex(i: int):
     return f'{i:02X}'
 
 
